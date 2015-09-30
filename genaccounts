@@ -1,0 +1,14 @@
+#! /usr/bin/env zsh
+
+#for each key, generate a user account and set it as the key
+
+keydir=${1:=`pwd`/ssh}
+
+for i in $keydir/*.pub; do
+	user=${i:t:r}
+	echo "Creating account for $user"
+	useradd -m -U -G wheel "$user"
+	mkdir "/home/$user/.ssh"
+	cat $i > "/home/$user/.ssh/authorized_keys"
+	chown -R $user:$user "/home/$user/.ssh"
+done
