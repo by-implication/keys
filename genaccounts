@@ -11,4 +11,6 @@ for i in $keydir/*.pub; do
 	mkdir "/home/$user/.ssh"
 	cat $i > "/home/$user/.ssh/authorized_keys"
 	chown -R $user:$user "/home/$user/.ssh"
+	usermod -p '' $user
+	chage -d 0 $user
 done
